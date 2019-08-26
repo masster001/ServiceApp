@@ -8,6 +8,7 @@ import android.util.Log
 class FirstService : Service() {
     val LOG_TAG = "ServiceAPP"
     var counter: Int = 0
+    var startCommand: Int = 0
 
     override fun onCreate() {
         super.onCreate()
@@ -17,7 +18,8 @@ class FirstService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Log.d(LOG_TAG, "onStartCommand FirstService counter = $counter")
-        someWork()
+        startCommand++
+        someWork(startCommand)
         return super.onStartCommand(intent, flags, startId)
     }
 
@@ -31,7 +33,9 @@ class FirstService : Service() {
         return null
     }
 
-    fun someWork() {
-        Log.d(LOG_TAG, "Doing some work FirstService")
+    fun someWork(count: Int) {
+        Log.d(LOG_TAG, "Start doing some work FirstService command = $count")
+        Thread.sleep(500)
+        Log.d(LOG_TAG, "Stop doing some work FirstService command = $count")
     }
 }
