@@ -20,7 +20,7 @@ class FirstService : Service() {
         Log.d(LOG_TAG, "onStartCommand counter = $counter thread = ${Thread.currentThread().id}")
         startCommand++
         //someWork(startCommand)
-        someWork2()
+        someWork2(startCommand)
         return super.onStartCommand(intent, flags, startId)
     }
 
@@ -40,12 +40,12 @@ class FirstService : Service() {
         Log.d(LOG_TAG, "Stop doing some work FirstService command = $count")
     }
 
-    fun someWork2() {
+    fun someWork2(index: Int = 1) {
         Thread(object : Runnable {
             override fun run() {
                 for (i in 1..5) {
                     Log.d(LOG_TAG, "Doing some work i = $i thread = ${Thread.currentThread().id}")
-                    Thread.sleep(1500)
+                    Thread.sleep(1500L/index)
                 }
                 stopSelf()
             }
