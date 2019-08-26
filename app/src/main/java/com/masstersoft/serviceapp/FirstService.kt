@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.IBinder
 import android.util.Log
 
-class FirstService : Service() {
+public class FirstService : Service() {
     val LOG_TAG = "ServiceAPP"
     var counter: Int = 0
     var startCommand: Int = 0
