@@ -12,20 +12,21 @@ class FirstService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        Log.d(LOG_TAG, "onCreate FirstService")
+        Log.d(LOG_TAG, "onCreate thread = ${Thread.currentThread().id}")
         counter++
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Log.d(LOG_TAG, "onStartCommand FirstService counter = $counter")
+        Log.d(LOG_TAG, "onStartCommand counter = $counter thread = ${Thread.currentThread().id}")
         startCommand++
-        someWork(startCommand)
+        //someWork(startCommand)
+        someWork2()
         return super.onStartCommand(intent, flags, startId)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d(LOG_TAG, "onDestroy FirstService")
+        Log.d(LOG_TAG, "onDestroy thread = ${Thread.currentThread().id}")
     }
 
     override fun onBind(intent: Intent): IBinder? {
@@ -37,5 +38,17 @@ class FirstService : Service() {
         Log.d(LOG_TAG, "Start doing some work FirstService command = $count")
         Thread.sleep(500)
         Log.d(LOG_TAG, "Stop doing some work FirstService command = $count")
+    }
+
+    fun someWork2() {
+        Thread(object : Runnable {
+            override fun run() {
+                for (i in 1..5) {
+                    Log.d(LOG_TAG, "Doing some work i = $i thread = ${Thread.currentThread().id}")
+                    Thread.sleep(1500)
+                }
+                stopSelf()
+            }
+        }).start()
     }
 }
