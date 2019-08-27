@@ -12,8 +12,10 @@
 
         <service android:name=".FirstService"
                  android:enabled="true"
-                 android:exported="true"
-                 android:process=":services" >
+                 android:exported="true">
+            <intent-filter>
+                <action android:name="com.masstersoft.serviceapp.FirstService"/>
+            </intent-filter>
         </service>
 
         <activity android:name=".MainActivity">

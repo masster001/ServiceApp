@@ -2,6 +2,7 @@ package com.masstersoft.serviceapp
 
 import android.app.Service
 import android.content.Intent
+import android.os.Binder
 import android.os.IBinder
 import android.util.Log
 
@@ -31,7 +32,17 @@ public class FirstService : Service() {
 
     override fun onBind(intent: Intent): IBinder? {
         Log.d(LOG_TAG, "onBind FirstService")
-        return null
+        return Binder()
+    }
+
+    override fun onRebind(intent: Intent?) {
+        super.onRebind(intent)
+        Log.d(LOG_TAG, "onRebind FirstService")
+    }
+
+    override fun onUnbind(intent: Intent?): Boolean {
+        Log.d(LOG_TAG, "onUnBind FirstService");
+        return super.onUnbind(intent)
     }
 
     fun someWork(count: Int) {
@@ -45,7 +56,7 @@ public class FirstService : Service() {
             override fun run() {
                 for (i in 1..5) {
                     Log.d(LOG_TAG, "Doing some work i = $i thread = ${Thread.currentThread().id}")
-                    Thread.sleep(1500L/index)
+                    Thread.sleep(1500L / index)
                 }
                 stopSelf()
             }

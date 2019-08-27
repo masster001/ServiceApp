@@ -6,7 +6,6 @@ import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -14,14 +13,15 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     var bound = false
-    val LOG_TAG = "FirstService"
+    val LOG_TAG = "ServiceAPP"
     val serviceConnection = getServiceConnection()
+    lateinit var int: Intent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setListeners()
-
+        int = Intent(this, FirstService::class.java)
     }
 
     private fun getServiceConnection() = object : ServiceConnection {
@@ -45,29 +45,24 @@ class MainActivity : AppCompatActivity() {
             stopService(Intent(this, FirstService::class.java))
         }
 
-//        btnBind.setOnClickListener {
-//            bindService(intent, serviceConnection, BIND_AUTO_CREATE)
-//        }
+        btnBind.setOnClickListener {
+            bindService(int, serviceConnection, BIND_AUTO_CREATE)
+        }
 
-        btnBind.setOnClickListener(object:View.OnClickListener{
-            override fun onClick(p0: View?) {
-                bindService(intent, serviceConnection, BIND_AUTO_CREATE)
-            }
-        })
+        btnUnBind.setOnClickListener {
+            onUnbindService()
+        }
+    }
 
-//        btnUnBind.setOnClickListener {
-//            if (bound) {
-//                unbindService(serviceConnection)
-//                bound = false
-//            }
-//        }
+    private fun onUnbindService() {
+        if (bound) {
+            unbindService(serviceConnection)
+            bound = false
+        }
+    }
 
-        btnUnBind.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(p0: View?) {
-                if (!bound) return
-                unbindService(serviceConnection)
-                bound = false
-            }
-        })
+    override fun onDestroy() {
+        super.onDestroy()
+        onUnbindService()
     }
 }
