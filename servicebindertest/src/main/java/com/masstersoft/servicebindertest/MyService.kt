@@ -39,13 +39,13 @@ class MyService : Service() {
     }
 
     fun upInterval(gap: Long): Long {
-        interval = interval + gap
+        interval += gap
         schedule()
         return interval
     }
 
     fun downInterval(gap: Long): Long {
-        interval = interval - gap
+        interval -= gap
         if (interval < 0) interval = 0
         schedule()
         return interval
