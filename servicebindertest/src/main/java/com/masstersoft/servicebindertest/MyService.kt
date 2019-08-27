@@ -2,9 +2,8 @@ package com.masstersoft.servicebindertest
 
 import android.app.Service
 import android.content.Intent
-import android.os.IBinder
-import android.R.string.cancel
 import android.os.Binder
+import android.os.IBinder
 import android.util.Log
 import java.util.*
 
@@ -13,8 +12,7 @@ class MyService : Service() {
 
     val LOG_TAG = "myLogs"
 
-    var binder = MyBinder()
-
+    lateinit var binder: MyBinder
     lateinit var timer: Timer
     var tTask: TimerTask? = null
     var interval: Long = 1000
@@ -22,6 +20,7 @@ class MyService : Service() {
     override fun onCreate() {
         super.onCreate()
         Log.d(LOG_TAG, "MyService onCreate")
+        binder = MyBinder()
         timer = Timer()
         schedule()
     }
@@ -56,7 +55,17 @@ class MyService : Service() {
         return binder
     }
 
-    inner class MyBinder : Binder() {
+    override fun onDestroy() {
+        super.onDestroy()
+        if (tTask != null) tTask!!.cancel()
+        Log.d(LOG_TAG, "MyService onDestroy")
+    }
+
+    inner class MyBinder : Binder {
+        constructor() {
+            Log.d("myLogs", "Create MyBinder")
+        }
+
         val service: MyService
             get() = this@MyService
     }

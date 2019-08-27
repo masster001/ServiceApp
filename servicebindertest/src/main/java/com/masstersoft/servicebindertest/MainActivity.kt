@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
     val LOG_TAG = "myLogs"
 
     var bound = false;
-    var serviceConn = getServiceConnection()
+    lateinit var serviceConn:ServiceConnection
     lateinit var int: Intent
     lateinit var myService: MyService
     var interval: Long = 0
@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         int = Intent(this, MyService::class.java)
+        serviceConn = getServiceConnection()
         setClickListeners()
     }
 
@@ -48,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         override fun onServiceConnected(p0: ComponentName?, p1: IBinder?) {
             Log.d(LOG_TAG, "MainActivity onServiceConnected");
             myService = (p1 as MyService.MyBinder).service
-            bound = true;
+            bound = true
         }
 
         override fun onServiceDisconnected(p0: ComponentName?) {
@@ -59,31 +60,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        bindService(int, serviceConn, 0);
+        bindService(int, serviceConn, 0)
     }
 
     override fun onStop() {
         super.onStop()
-        if (!bound) return
-        unbindService(serviceConn)
-        bound = false
+        if (bound) {
+            unbindService(serviceConn)
+            bound = false
+        }
     }
-
-
-    /*
-    * public void onClickStart(View v) {
-    startService(intent);
-  }
-
-  public void onClickUp(View v) {
-    if (!bound) return;
-    interval = myService.upInterval(500);
-    tvInterval.setText("interval = " + interval);
-  }
-
-  public void onClickDown(View v) {
-    if (!bound) return;
-    interval = myService.downInterval(500);
-    tvInterval.setText("interval = " + interval);
-  }*/
 }
