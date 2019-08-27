@@ -55,6 +55,16 @@ class MyService : Service() {
         return binder
     }
 
+    override fun onUnbind(intent: Intent?): Boolean {
+        Log.d(LOG_TAG, "MyService onUnBind")
+        return super.onUnbind(intent)
+    }
+
+    override fun onRebind(intent: Intent?) {
+        super.onRebind(intent)
+        Log.d(LOG_TAG, "MyService onReBind")
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         if (tTask != null) tTask!!.cancel()
