@@ -17,6 +17,18 @@
             android:layout_height="wrap_content"
             android:text="@string/stop">
     </Button>
+    <Button
+            android:id="@+id/btnBind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bind">
+    </Button>
+    <Button
+            android:id="@+id/btnUnBind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/unbind">
+    </Button>
     <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

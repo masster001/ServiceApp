@@ -2,4 +2,6 @@
     <string name="app_name">ServiceApp</string>
     <string name="start">Start service</string>
     <string name="stop">Stop service</string>
+    <string name="bind">Bind</string>
+    <string name="unbind">Unbind</string>
 </resources>
