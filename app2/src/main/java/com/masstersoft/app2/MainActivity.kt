@@ -15,8 +15,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setListeners(){
         btnStart.setOnClickListener {
-            startService(Intent("com.masstersoft.serviceapp.FirstService")
-                .setPackage("com.masstersoft"))
+            startService(Intent("com.masstersoft.app3.MyService"))
         }
     }
 }

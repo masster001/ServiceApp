@@ -13,6 +13,9 @@
                 android:name=".MyService"
                 android:enabled="true"
                 android:exported="true">
+            <intent-filter>
+                <action android:name="com.masstersoft.app3.MyService"/>
+            </intent-filter>
         </service>
     </application>
 
